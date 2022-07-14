@@ -36,8 +36,8 @@ jobs:
       MYSQL_ROOT_PASSWORD: ''
       MYSQL_ALLOW_EMPTY_PASSWORD: true
     steps:
-      #- name: Start MySQL
-      #  run: sudo /etc/init.d/mysql start 
+      - name: Start MySQL
+        run: sudo systemctl start mysql
         
       - name: Checkout code
         uses: actions/checkout@v3
