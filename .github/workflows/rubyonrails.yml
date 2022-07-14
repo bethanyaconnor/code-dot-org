@@ -32,6 +32,7 @@ jobs:
       MYSQL_USER: user
       MYSQL_PASSWORD: password
       MYSQL_DATABASE: dashboard_test
+      MYSQL_ROOT_PASSWORD: root
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
