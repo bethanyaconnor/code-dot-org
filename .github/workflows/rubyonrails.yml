@@ -23,7 +23,6 @@ jobs:
           MYSQL_ROOT_PASSWORD: root
         ports:
           - 3306:3306
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=10s --health-retries=10
     env:
       CI: true
       RAILS_ENV: test
@@ -34,6 +33,9 @@ jobs:
       MYSQL_DATABASE: dashboard_test
       MYSQL_ROOT_PASSWORD: root
     steps:
+      - name: Start MySQL
+        run: sudo systemctl start mysql
+    
       - name: Checkout code
         uses: actions/checkout@v3
       # Add or replace dependency steps here
@@ -50,8 +52,6 @@ jobs:
           bundle install
           cd ../
         
-      - name: Start MySQL
-        run: sudo systemctl start mysql
         
       # Add or replace database setup steps here
       - name: Create db
