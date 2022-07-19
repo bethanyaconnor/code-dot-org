@@ -41,10 +41,10 @@ jobs:
           ruby-version: 2.5
           bundler-cache: true
           
-      - name: Install imagemagick
+      - name: Install packages
         run: |
           sudo apt-get update
-          sudo apt-get -y install libmagickwand-dev imagemagick
+          sudo apt-get -y install libmagickwand-dev imagemagick ghostscript
       
      # Infer node version from .nvmrc, courtesy of https://github.com/actions/setup-node/issues/32#issuecomment-539794249
       - name: Read .nvmrc
