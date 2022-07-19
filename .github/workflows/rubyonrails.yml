@@ -42,7 +42,9 @@ jobs:
           bundler-cache: true
           
       - name: Install imagemagick
-        run: sudo apt-get update && apt-get -y install libmagickwand-dev imagemagick
+        run: |
+          sudo apt-get update
+          sudo apt-get -y install libmagickwand-dev imagemagick
       
      # Infer node version from .nvmrc, courtesy of https://github.com/actions/setup-node/issues/32#issuecomment-539794249
       - name: Read .nvmrc
