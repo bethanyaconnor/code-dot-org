@@ -20,9 +20,9 @@ jobs:
       DISABLE_SPRING: 1
     container:
       image: codedotorg/code-dot-org:1.3
-      volumes:
-        - rbenv:/home/circleci/.rbenv
-        - mysql:/var/lib/mysql
+      #volumes:
+      #  - rbenv:/home/circleci/.rbenv
+      #  - mysql:/var/lib/mysql
     steps:
       - name: Start MySQL
         run: sudo /etc/init.d/mysql start
@@ -31,7 +31,7 @@ jobs:
       #  run: echo "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '';" | sudo mysql -uroot -proot
     
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v1
         with:
           fetch-depth: 200
         
