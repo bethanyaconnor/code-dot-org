@@ -60,9 +60,6 @@ jobs:
 
       - name: Rake Build
         run: bundle exec rake build
-        
-      #- name: Run tests
-      #  run: bundle exec rake test:all
-      
-      - name: Run pegasus tests
-        run: bundle exec rake test:pegasus
+
+      - name: Run tests
+        run: bundle exec rake test:all
