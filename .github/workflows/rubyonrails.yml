@@ -35,10 +35,10 @@ jobs:
         with:
           fetch-depth: 200
         
-      - name: Setup locals
-        run: |
-          chmod +x docker/setup_unit_tests_locals.sh
-          ./docker/setup_unit_tests_locals.sh 
+      #- name: Setup locals
+      #  run: |
+      #    chmod +x docker/setup_unit_tests_locals.sh
+      #    ./docker/setup_unit_tests_locals.sh 
         
       - name: Install Ruby and gems
         uses: ruby/setup-ruby@8f312efe1262fb463d906e9bf040319394c18d3e # v1.92
@@ -46,8 +46,8 @@ jobs:
           ruby-version: 2.5
           bundler-cache: true
         
-      - name: Rake Install
-        run: bundle exec rake install
+      #- name: Rake Install
+      #  run: bundle exec rake install
       
      # Infer node version from .nvmrc, courtesy of https://github.com/actions/setup-node/issues/32#issuecomment-539794249
       - name: Read .nvmrc
@@ -58,8 +58,10 @@ jobs:
         with:
           node-version: ${{ steps.nvm.outputs.NODE_VERSION }}
 
-      - name: Rake Build
-        run: bundle exec rake build
+      #- name: Rake Build
+      #  run: bundle exec rake build
         
-      - name: Run tests
-        run: bundle exec rake test:all
+      #- name: Run tests
+      #  run: bundle exec rake test:all
+
+      - run: ./docker/unit_tests.sh
