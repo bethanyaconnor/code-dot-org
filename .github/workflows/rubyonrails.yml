@@ -44,7 +44,7 @@ jobs:
       - name: Install packages
         run: |
           sudo apt-get update
-          sudo apt-get -y install libmagickwand-dev imagemagick ghostscript
+          sudo apt-get -y install libmagickwand-dev imagemagick ghostscript pdftk
       
      # Infer node version from .nvmrc, courtesy of https://github.com/actions/setup-node/issues/32#issuecomment-539794249
       - name: Read .nvmrc
@@ -61,5 +61,8 @@ jobs:
       - name: Rake Build
         run: bundle exec rake build
         
-      - name: Run tests
-        run: bundle exec rake test:all
+      #- name: Run tests
+      #  run: bundle exec rake test:all
+      
+      - name: Run pegasus tests
+        run: bundle exec rake test:pegasus
