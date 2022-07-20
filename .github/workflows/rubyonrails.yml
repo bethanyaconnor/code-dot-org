@@ -21,9 +21,9 @@ jobs:
       ImageOS: ubuntu20
     container:
       image: codedotorg/code-dot-org:1.3
-      #volumes:
-      #  - rbenv:/home/circleci/.rbenv
-      #  - mysql:/var/lib/mysql
+      volumes:
+        - rbenv:/home/circleci/.rbenv
+        - mysql:/var/lib/mysql
     steps:
       - name: Start MySQL
         run: sudo /etc/init.d/mysql start
