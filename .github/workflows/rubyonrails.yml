@@ -33,7 +33,6 @@ jobs:
           username: ${{ secrets.SAUCE_USERNAME }}
           accessKey: ${{ secrets.SAUCE_ACCESS_KEY }}
           tunnelIdentifier: bethany-github-action-tunnel
-          configFile: ${{ github.workspace }}/sc-configuration/config.yaml
 
       - name: Checkout code
         uses: actions/checkout@v3
