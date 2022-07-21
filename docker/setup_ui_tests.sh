@@ -10,8 +10,8 @@ ulimit -n 4096
 
 export CIRCLE_BUILD_NUM=${DRONE_BUILD_NUMBER:-$RANDOM$RANDOM}
 export CIRCLE_NODE_INDEX=1
-export CIRCLE_TEST_REPORTS=/home/circleci/test_reports
-export CIRCLE_ARTIFACTS=/home/circleci/artifacts
+export CIRCLE_TEST_REPORTS=/tmp/test_reports
+export CIRCLE_ARTIFACTS=/tmp/artifacts
 
 mkdir $CIRCLE_ARTIFACTS
 
