@@ -27,10 +27,13 @@ jobs:
       - name: Set mysql root password
         run: echo "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '';" | sudo mysql -uroot -proot
 
-      - name: Saucectl RUN Docker and Cloud
-        uses: saucelabs/saucectl-run-action@v1
+
+      - uses: saucelabs/sauce-connect-action@v2
         with:
-          concurrency: 1
+          username: ${{ secrets.SAUCE_USERNAME }}
+          accessKey: ${{ secrets.SAUCE_ACCESS_KEY }}
+          tunnelIdentifier: bethany-github-action-tunnel
+          configFile: ${{ github.workspace }}/sc-configuration/config.yaml
 
       - name: Checkout code
         uses: actions/checkout@v3
