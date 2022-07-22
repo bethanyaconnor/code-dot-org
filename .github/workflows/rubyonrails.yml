@@ -1,0 +1,71 @@
+# This workflow uses actions that are not certified by GitHub.  They are
+# provided by a third-party and are governed by separate terms of service,
+# privacy policy, and support documentation.
+#
+# This workflow will install a prebuilt Ruby version, install dependencies, and
+# run tests and linters.
+name: "Ruby on Rails CI"
+on:
+  push:
+    branches: [ "staging" ]
+  pull_request:
+    branches: [ "staging" ]
+jobs:
+  ui-test:
+    runs-on: ubuntu-latest
+    env:
+      CI: true
+      RAILS_ENV: test
+      RACK_ENV: test
+      DISABLE_SPRING: 1
+      SAUCE_USERNAME: ${{secrets.SAUCE_USERNAME}}
+      SAUCE_ACCESS_KEY: ${{secrets.SAUCE_ACCESS_KEY}}
+    steps:
+      - name: Start MySQL
+        run: sudo /etc/init.d/mysql start
+
+      - name: Set mysql root password
+        run: echo "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '';" | sudo mysql -uroot -proot
+
+
+      - uses: saucelabs/sauce-connect-action@v2
+        with:
+          username: ${{ secrets.SAUCE_USERNAME }}
+          accessKey: ${{ secrets.SAUCE_ACCESS_KEY }}
+          tunnelIdentifier: bethany-github-action-tunnel
+
+      - name: Checkout code
+        uses: actions/checkout@v3
+        #with:
+        #  fetch-depth: 200
+
+      - name: Setup locals
+        run: |
+          ./docker/setup_ui_tests.sh
+
+      - name: Install Ruby and gems
+        uses: ruby/setup-ruby@8f312efe1262fb463d906e9bf040319394c18d3e # v1.92
+        with:
+          ruby-version: 2.5
+          bundler-cache: true
+
+      # Infer node version from .nvmrc, courtesy of https://github.com/actions/setup-node/issues/32#issuecomment-539794249
+      - name: Read .nvmrc
+        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
+        id: nvm
+      - name: Use Node.js ${{ steps.nvm.outputs.NODE_VERSION }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ steps.nvm.outputs.NODE_VERSION }}
+
+      - name: Rake Install
+        run: bundle exec rake install
+
+      - name: Rake Build
+        run: bundle exec rake build
+
+      - name: Seed DB
+        run: bundle exec rake circle:seed_ui_test --trace
+
+      - name: Run tests
+        run: bundle exec rake circle:run_ui_tests --trace
